@@ -1,4 +1,4 @@
-use num::{Num, Zero, FromPrimitive};
+use num::{Zero};
 use std::fmt;
 use std::ops;
 use std::ops::{Add, Div, Mul, Sub};
@@ -17,7 +17,7 @@ impl<T> Vector<T> {
     }
 }
 
-impl<T, const N: usize> From<[T; N]> for Vector<T> where T: Zero + Copy + Add<T, Output= T> + Mul<T, Output= T> + Div<T, Output= T> + Sub<T, Output= T> + FromPrimitive, {
+impl<T, const N: usize> From<[T; N]> for Vector<T> where T: Zero + Copy + Add<T, Output= T> + Mul<T, Output= T> + Div<T, Output= T> + Sub<T, Output= T>, {
     fn from(d: [T; N]) -> Self {
         Self { data : Vec::<T>::from(d)}
     }
@@ -31,7 +31,7 @@ impl<T> fmt::Display for Vector<T> where T: fmt::Display + Copy {
     }
 }
 
-impl<T> ops::Add<Vector<T>> for Vector<T> where T:Num + Copy + Clone +ops::Add<Output=T> {
+impl<T> ops::Add<Vector<T>> for Vector<T> where T: Copy + Clone +ops::Add<Output=T> {
     type Output = Vector<T>;
     fn add(self, _rhs: Vector<T>) -> Vector<T> {
         if self.size() != _rhs.size() {
