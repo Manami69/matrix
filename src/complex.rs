@@ -16,7 +16,21 @@ impl Complexf64 {
 
 impl fmt::Display for Complexf64 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}+{}i", &self.real, &self.imaginary)
+        if self.is_zero()
+        {
+            write!(f, "0")
+        }
+        else if self.real.is_zero()
+        {
+            write!(f, "{}i", &self.imaginary)
+        }
+        else if self.imaginary.is_zero()
+        {
+            write!(f, "{}", &self.real)
+        }
+        else {
+            write!(f, "{}+{}i", &self.real, &self.imaginary)
+        }
     }
 }
 
