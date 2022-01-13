@@ -1,4 +1,4 @@
-use num::{ Num, Zero};
+use num::{ Zero};
 use std::fmt;
 use std::ops::{Add, Div, Mul, Sub};
 
@@ -56,6 +56,12 @@ impl Sub<Complexf64> for Complexf64  {
     }
 }
 
+impl<T> Sub<T> for Complexf64 where T: Into<f64> {
+    type Output = Complexf64;
+    fn sub(self, _rhs: T) -> Complexf64 {
+        Complexf64::new(self.real - _rhs.into(), self.imaginary)
+    }
+}
 
 // https://wims.univ-cotedazur.fr/wims/wims.cgi?session=3P6507DCBB.1&+lang=fr&+module=H6%2Falgebra%2Fdocintrocomplexf64.fr&+cmd=reply&+job=read&+doc=1&+block=produit
 impl Mul<Complexf64> for Complexf64  {
@@ -69,19 +75,40 @@ impl Mul<Complexf64> for Complexf64  {
     }
 }
 
+impl<T> Mul<T> for Complexf64 where T: Into<f64> {
+    type Output = Complexf64;
+    fn mul(self, _rhs: T) -> Complexf64 {
+        let num: f64 = _rhs.into();
+        Complexf64::new(self.real * num, self.imaginary * num)
+    }
+}
+
 // https://wims.univ-cotedazur.fr/wims/wims.cgi?session=3P6507DCBB.7&+lang=fr&+module=H6%2Falgebra%2Fdocintrocomplexf64.fr&+cmd=reply&+job=read&+doc=1&+block=quotient
 impl Div<Complexf64> for Complexf64 where  {
     type Output = Complexf64;
     fn div(self, _rhs: Complexf64) -> Complexf64 {
-        if _rhs.imaginary == f64::zero() && _rhs.real == f64::zero()
+        if _rhs.is_zero()
         {
-            panic!("Can't divide by null number")
+            panic!("Can't divide by zero")
         }
         let a: f64 = self.real;
         let b: f64 = self.imaginary;
         let c: f64 = _rhs.real;
         let d: f64 = _rhs.imaginary;
         Complexf64::new(((a * c) + (b * d)) / ((c * c) + (d * d)), ((b * c) - (a * d)) / ((c * c) + (d * d)))
+    }
+}
+
+impl<T> Div<T> for Complexf64 where T: Into<f64> {
+    type Output = Complexf64;
+    fn div(self, _rhs: T) -> Complexf64 {
+        let num: f64 = _rhs.into();
+        if num.is_zero()
+        {
+            panic!("Can't divide by zero")
+        }
+
+        Complexf64::new(self.real / num, self.imaginary / num)
     }
 }
 
