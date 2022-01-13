@@ -7,5 +7,5 @@ fn main() {
     let vec = Vector::from(complex_float);
     let vec2 = Vector::from(complex_float);
     println!("{}",vec + vec2); 
-
+    println!("{}", Complexf64::new(10., 10.) + 32 )
 }

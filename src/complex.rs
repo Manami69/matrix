@@ -1,4 +1,4 @@
-use num::{ Zero};
+use num::{ Num, Zero};
 use std::fmt;
 use std::ops::{Add, Div, Mul, Sub};
 
@@ -40,6 +40,13 @@ impl Add<Complexf64> for Complexf64 {
     type Output = Complexf64;
     fn add(self, _rhs: Complexf64) -> Complexf64 {
         Complexf64::new(self.real + _rhs.real, self.imaginary + _rhs.imaginary)
+    }
+}
+
+impl<T> Add<T> for Complexf64 where T: Into<f64> {
+    type Output = Complexf64;
+    fn add(self, _rhs: T) -> Complexf64 {
+        Complexf64::new(self.real + _rhs.into(), self.imaginary)
     }
 }
 impl Sub<Complexf64> for Complexf64  {
