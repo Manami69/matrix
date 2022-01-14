@@ -1,8 +1,7 @@
-use num::{Zero};
 use std::fmt;
 use std::ops::{Add, Div, Mul, Sub};
 #[derive(PartialEq, PartialOrd, Eq, Clone, Hash, Debug)]
-pub struct Matrix<T> {
+pub struct Matrix<V> {
     /// Returns a Matrix 
     /// 
     /// # Arguments
@@ -14,38 +13,40 @@ pub struct Matrix<T> {
     /// * data : vec with all elements of the Matrix
     /// * n : number of column
     /// * m : number of rows 
-    data: Vec<T>,
+    data: Vec<V>,
     m: usize,
     n: usize,
 }
 
-// impl<T> Matrix<T> {
-//     #[allow(dead_code)]
-//     pub fn size(&self) -> usize {
-//         self.data.len()
-//     }
-//     fn from_vec(&self, vec:Vec<T>) -> Self {
-//         Self {data: vec}
-//     }
-// }
 
-impl<T, const N: usize, const M: usize> From<[[T; N]; M]> for Matrix<T> where T: Zero + Copy + Add<T, Output= T> + Mul<T, Output= T> + Div<T, Output= T> + Sub<T, Output= T>, {
-    fn from(d: [[T; N]; M]) -> Self {
-        let mut vec = Vec::<T>::new();
-        for item in d.into_iter().enumerate() {
-            let mut next = Vec::<T>::from(item.1);
-            vec.append(&mut next);
-        }
-        Self { data : vec, m: d.len(), n: d[0].len()}
+impl<V> Matrix<V> where V : Clone{
+    #[allow(dead_code)]
+    pub fn shape(&self) -> [usize; 2] {
+        [self.m, self.n]
+    }
+    pub fn get_data(&self) -> Vec<V> {
+        let ret = self.data.clone();
+        ret
     }
 }
 
-impl<T> fmt::Display for Matrix<T> where T: fmt::Display  {
+impl<V, const N: usize, const M: usize> From<[[V; N]; M]> for Matrix<V> where V: Add<V, Output= V> + Mul<V, Output= V> + Div<V, Output= V> + Sub<V, Output= V>, {
+    fn from(d: [[V; N]; M]) -> Self {
+        let mut vec = Vec::<V>::new();
+        for item in d.into_iter().enumerate() {
+            let mut next = Vec::<V>::from(item.1);
+            vec.append(&mut next);
+        }
+        Self { data : vec, m: M, n: N}
+    }
+}
+
+impl<V> fmt::Display for Matrix<V> where V: fmt::Display  {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let mut to_display = String::new();
         to_display.push('[');
         for (pos, e) in self.data.iter().enumerate() {
-            to_display += &e.to_string();
+            to_display += &format!("{:.1}", e);
             if (pos + 1) % self.n == 0 
             {
                 to_display += "]\n[";
