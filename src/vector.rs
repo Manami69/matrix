@@ -75,7 +75,7 @@ impl<K> fmt::Display for Vector<K> where K: fmt::Display  {
 /// 
 /// * All operation can be made with or without references if you are finished with your old Vector.s
 
-
+/// ADD
 impl<K> ops::Add<&Vector<K>> for &Vector<K> where K: Copy + Clone +ops::Add<Output=K> {
     type Output = Vector<K>;
     fn add(self, _rhs: &Vector<K>) -> Vector<K> {
@@ -113,5 +113,62 @@ impl<K> ops::Add<Vector<K>> for Vector<K> where K:Copy + Clone +ops::Add<Output=
             panic!("cannot add 2 vector with different dimensions");
         }
         self.from_vec(self.data.iter().zip(_rhs.data.iter()).map(|x| K::clone(x.0) + K::clone(x.1)).collect())
+    }
+}
+
+/// SUB
+impl<K> Sub<&Vector<K>> for &Vector<K> where K: Copy + Clone +Sub<Output=K> {
+    type Output = Vector<K>;
+    fn sub(self, _rhs: &Vector<K>) -> Vector<K> {
+        if self.size() != _rhs.size() {
+            panic!("cannot sub 2 vector with different dimensions");
+        }
+        self.from_vec(self.data.iter().zip(_rhs.data.iter()).map(|x| K::clone(x.0) - K::clone(x.1)).collect())
+    }
+}
+
+impl<K> Sub<Vector<K>> for &Vector<K> where K: Clone + Sub<Output=K> {
+    type Output = Vector<K>;
+    fn sub(self, _rhs: Vector<K>) -> Vector<K> {
+        if self.size() != _rhs.size() {
+            panic!("cannot sub 2 vector with different dimensions");
+        }
+        self.from_vec(self.data.iter().zip(_rhs.data.iter()).map(|x| K::clone(x.0) - K::clone(x.1)).collect())
+    }
+}
+
+impl<K> Sub<&Vector<K>> for Vector<K> where K: Clone +Sub<Output=K> {
+    type Output = Vector<K>;
+    fn sub(self, _rhs: &Vector<K>) -> Vector<K> {
+        if self.size() != _rhs.size() {
+            panic!("cannot sub 2 vector with different dimensions");
+        }
+        self.from_vec(self.data.iter().zip(_rhs.data.iter()).map(|x| K::clone(x.0) - K::clone(x.1)).collect())
+    }
+}
+
+impl<K> Sub<Vector<K>> for Vector<K> where K:Copy + Clone +Sub<Output=K> {
+    type Output = Vector<K>;
+    fn sub(self, _rhs: Vector<K>) -> Vector<K> {
+        if self.size() != _rhs.size() {
+            panic!("cannot sub 2 vector with different dimensions");
+        }
+        self.from_vec(self.data.iter().zip(_rhs.data.iter()).map(|x| K::clone(x.0) - K::clone(x.1)).collect())
+    }
+}
+
+// SCALE
+
+impl<K> Mul<K> for Vector<K> where K: Copy + Clone + Mul<Output=K> + Into<f64> {
+    type Output = Vector<K>;
+    fn mul(self, _rhs: K) -> Vector<K> {
+        self.from_vec(self.data.iter().map(|x| K::clone(x) * _rhs).collect())
+    }
+}
+
+impl<K> Mul<K> for &Vector<K> where K: Copy + Clone + Mul<Output=K> + Into<f64>{
+    type Output = Vector<K>;
+    fn mul(self, _rhs: K) -> Vector<K> {
+        self.from_vec(self.data.iter().map(|x| K::clone(x) * _rhs).collect())
     }
 }
