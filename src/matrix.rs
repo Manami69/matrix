@@ -19,7 +19,7 @@ pub struct Matrix<V> {
 }
 
 
-impl<V> Matrix<V> where V : Clone{
+impl<V> Matrix<V> where V : Clone {
     #[allow(dead_code)]
     pub fn shape(&self) -> [usize; 2] {
         [self.m, self.n]

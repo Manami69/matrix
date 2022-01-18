@@ -35,29 +35,29 @@ impl<K, const N: usize> From<[K; N]> for Vector<K> where K:  Add<K, Output= K> +
     }
 }
 
-impl <K> From<Matrix<K>> for Vector<K> where K: Zero + Copy + Add<K, Output= K> + Mul<K, Output= K> + Div<K, Output= K> + Sub<K, Output= K>, {
+impl <K> From<Matrix<K>> for Vector<K> where K: Zero + Clone + Add<K, Output= K> + Mul<K, Output= K> + Div<K, Output= K> + Sub<K, Output= K>, {
     fn from (d: Matrix<K>) -> Self {
         Self { data : d.get_data() }
     }
 }
 
-impl <K> From<&Matrix<K>> for Vector<K> where K: Zero + Copy + Add<K, Output= K> + Mul<K, Output= K> + Div<K, Output= K> + Sub<K, Output= K>, {
+impl <K> From<&Matrix<K>> for Vector<K> where K: Zero + Clone + Add<K, Output= K> + Mul<K, Output= K> + Div<K, Output= K> + Sub<K, Output= K>, {
     fn from (d: &Matrix<K>) -> Self {
         Self { data : d.get_data() }
     }
 }
 
 
-impl <K> From<&Vector<K>> for Vector<K> where K: Zero + Copy + Add<K, Output= K> + Mul<K, Output= K> + Div<K, Output= K> + Sub<K, Output= K>, {
+impl <K> From<&Vector<K>> for Vector<K> where K: Zero + Clone + Add<K, Output= K> + Mul<K, Output= K> + Div<K, Output= K> + Sub<K, Output= K>, {
     fn from (d: &Vector<K>) -> Self {
         Self { data : d.data.clone() }
     }
 }
 
 /// Display Vector
-impl<K> fmt::Display for Vector<K> where K: fmt::Display + Copy {
+impl<K> fmt::Display for Vector<K> where K: fmt::Display  {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let mut to_display = self.data.iter().fold(String::new(), |acc, &num| acc + &format!("[{:.1}]\n", &num));
+        let mut to_display = self.data.iter().fold(String::new(), |acc, num| acc + &format!("[{:.1}]\n", &num));
         to_display.pop();
         write!(f, "{}", to_display)
     }
@@ -82,64 +82,36 @@ impl<K> ops::Add<&Vector<K>> for &Vector<K> where K: Copy + Clone +ops::Add<Outp
         if self.size() != _rhs.size() {
             panic!("cannot add 2 vector with different dimensions");
         }
-        let mut new = Vec::<K>::new();
-        let mut i = 0;
-        while i < self.size()
-        {
-            new.push(self.data[i] + _rhs.data[i]);
-            i+= 1;
-        }
-        self.from_vec(new)
+        self.from_vec(self.data.iter().zip(_rhs.data.iter()).map(|x| K::clone(x.0) + K::clone(x.1)).collect())
     }
 }
 
-impl<K> ops::Add<Vector<K>> for &Vector<K> where K: Copy + Clone +ops::Add<Output=K> {
+impl<K> ops::Add<Vector<K>> for &Vector<K> where K: Clone + ops::Add<Output=K> {
     type Output = Vector<K>;
     fn add(self, _rhs: Vector<K>) -> Vector<K> {
         if self.size() != _rhs.size() {
             panic!("cannot add 2 vector with different dimensions");
         }
-        let mut new = Vec::<K>::new();
-        let mut i = 0;
-        while i < self.size()
-        {
-            new.push(self.data[i] + _rhs.data[i]);
-            i+= 1;
-        }
-        self.from_vec(new)
+        self.from_vec(self.data.iter().zip(_rhs.data.iter()).map(|x| K::clone(x.0) + K::clone(x.1)).collect())
     }
 }
 
-impl<K> ops::Add<&Vector<K>> for Vector<K> where K: Copy + Clone +ops::Add<Output=K> {
+impl<K> ops::Add<&Vector<K>> for Vector<K> where K: Clone +ops::Add<Output=K> {
     type Output = Vector<K>;
     fn add(self, _rhs: &Vector<K>) -> Vector<K> {
         if self.size() != _rhs.size() {
             panic!("cannot add 2 vector with different dimensions");
         }
-        let mut new = Vec::<K>::new();
-        let mut i = 0;
-        while i < self.size()
-        {
-            new.push(self.data[i] + _rhs.data[i]);
-            i+= 1;
-        }
-        self.from_vec(new)
+        self.from_vec(self.data.iter().zip(_rhs.data.iter()).map(|x| K::clone(x.0) + K::clone(x.1)).collect())
     }
 }
 
-impl<K> ops::Add<Vector<K>> for Vector<K> where K: Copy + Clone +ops::Add<Output=K> {
+impl<K> ops::Add<Vector<K>> for Vector<K> where K:Copy + Clone +ops::Add<Output=K> {
     type Output = Vector<K>;
     fn add(self, _rhs: Vector<K>) -> Vector<K> {
         if self.size() != _rhs.size() {
             panic!("cannot add 2 vector with different dimensions");
         }
-        let mut new = Vec::<K>::new();
-        let mut i = 0;
-        while i < self.size()
-        {
-            new.push(self.data[i] + _rhs.data[i]);
-            i+= 1;
-        }
-        self.from_vec(new)
+        self.from_vec(self.data.iter().zip(_rhs.data.iter()).map(|x| K::clone(x.0) + K::clone(x.1)).collect())
     }
 }

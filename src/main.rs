@@ -11,10 +11,9 @@ fn main() {
     // let vec2 = Vector::from(complex_float);
     let matrix = Matrix::from([[1.,2., 3.], [4., 5., 6.]]);
     println!("{}", matrix);
-    let v = Vector::from(&matrix);
+    let v = Vector::from(Matrix::from([[1.,2., 3.], [4., 5., 6.]]));
     let v1 = Vector::from([6.,5.,4.,3.,2.,1.]);
     println!("re {}\n v {}", matrix, v);
-    let v3 = Vector::from(v);
-    println!{"{}\n", 4.clone()}
+    println!{"++ {}\n", v + &v1}
 
 }
