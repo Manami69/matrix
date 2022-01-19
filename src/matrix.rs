@@ -31,11 +31,17 @@ impl<K> Matrix<K> where K : Number {
     pub fn get_data(&self) -> Vec<K> {
         self.data.clone()
     }
+	fn from_vec(&self, vec:Vec<K>, shape:[usize; 2]) -> Self {
+		Self {data: vec, m: shape[0], n: shape[1]}
+	}
 	pub fn is_square(&self) -> bool {
 		self.m == self.n
 	}
 }
 
+
+/// CONSTRUCTOR FROM 
+///
 impl<K, const N: usize, const M: usize> From<[[K; N]; M]> for Matrix<K> where K: Number {
     fn from(d: [[K; N]; M]) -> Self {
         let mut vec = Vec::<K>::new();
@@ -71,7 +77,9 @@ impl<K> From<&Vector<K>> for Matrix<K> where K: Number {
     }
 }
 
-
+///
+/// DISPLAY
+/// 
 impl<K> fmt::Display for Matrix<K> where K: Number + fmt::Display {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let mut to_display = String::new();
@@ -87,5 +95,22 @@ impl<K> fmt::Display for Matrix<K> where K: Number + fmt::Display {
         to_display.pop();
         to_display.pop();
         write!(f, "{}", to_display)
+    }
+}
+
+/// OPERATOR + / - / * OVERLOADING
+/// 
+/// *** Use references(&) to not consume the Vectors ***
+/// 
+/// * All operation can be made with or without references if you are finished with your old Vector.s
+
+/// ADD
+impl<K> Add<&Matrix<K>> for &Matrix<K> where K: Number {
+    type Output = Matrix<K>;
+    fn add(self, _rhs: &Matrix<K>) -> Matrix<K> {
+        if self.shape() != _rhs.shape() {
+            panic!("cannot add 2 matrixes with different shapes");
+        }
+        self.from_vec(self.data.iter().zip(_rhs.data.iter()).map(|x| K::clone(x.0) + K::clone(x.1)).collect(), self.shape())
     }
 }
