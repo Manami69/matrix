@@ -1,19 +1,20 @@
 use crate::matrix;
+use crate::number_type;
+use number_type::Number;
 use matrix::Matrix;
 use num::{Zero};
 use std::fmt;
-use std::ops;
 use std::ops::{Add, Div, Mul, Sub};
 
 
 /// VECTOR CLASS
 
 #[derive(PartialEq, PartialOrd, Eq, Clone, Hash, Debug)]
-pub struct Vector<K> {
+pub struct Vector<K> where K : Number{
     data: Vec<K>, 
 }
 
-impl<K> Vector<K> {
+impl<K> Vector<K> where K: Number {
     #[allow(dead_code)]
     pub fn size(&self) -> usize {
         self.data.len()
@@ -21,6 +22,9 @@ impl<K> Vector<K> {
     fn from_vec(&self, vec:Vec<K>) -> Self {
         Self {data: vec}
     }
+	pub fn get_data(&self) -> Vec<K> {
+		self.data.clone()
+	}
 }
 
 
@@ -29,45 +33,39 @@ impl<K> Vector<K> {
 /// * a simple Matrix
 /// * a simple Vector
 /// * a Vector Array 
-impl<K, const N: usize> From<[K; N]> for Vector<K> where K:  Add<K, Output= K> + Mul<K, Output= K> + Div<K, Output= K> + Sub<K, Output= K>, {
+impl<K, const N: usize> From<[K; N]> for Vector<K> where K: Number {
     fn from(d: [K; N]) -> Self {
         Self { data : Vec::<K>::from(d)}
     }
 }
 
-impl <K> From<Matrix<K>> for Vector<K> where K: Zero + Clone + Add<K, Output= K> + Mul<K, Output= K> + Div<K, Output= K> + Sub<K, Output= K>, {
+impl <K> From<Matrix<K>> for Vector<K> where K: Number {
     fn from (d: Matrix<K>) -> Self {
         Self { data : d.get_data() }
     }
 }
 
-impl <K> From<&Matrix<K>> for Vector<K> where K: Zero + Clone + Add<K, Output= K> + Mul<K, Output= K> + Div<K, Output= K> + Sub<K, Output= K>, {
+impl <K> From<&Matrix<K>> for Vector<K> where K: Number {
     fn from (d: &Matrix<K>) -> Self {
         Self { data : d.get_data() }
     }
 }
 
 
-impl <K> From<&Vector<K>> for Vector<K> where K: Zero + Clone + Add<K, Output= K> + Mul<K, Output= K> + Div<K, Output= K> + Sub<K, Output= K>, {
+impl <K> From<&Vector<K>> for Vector<K> where K: Number {
     fn from (d: &Vector<K>) -> Self {
-        Self { data : d.data.clone() }
+        Self { data : d.get_data() }
     }
 }
 
 /// Display Vector
-impl<K> fmt::Display for Vector<K> where K: fmt::Display  {
+impl<K> fmt::Display for Vector<K> where K: Number + fmt::Display {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let mut to_display = self.data.iter().fold(String::new(), |acc, num| acc + &format!("[{:.1}]\n", &num));
         to_display.pop();
         write!(f, "{}", to_display)
     }
 }
-
-/// Exercise 00 - Add, Subtract and Scale
-
-
-
- 
 
 /// OPERATOR + / - / * OVERLOADING
 /// 
@@ -76,7 +74,7 @@ impl<K> fmt::Display for Vector<K> where K: fmt::Display  {
 /// * All operation can be made with or without references if you are finished with your old Vector.s
 
 /// ADD
-impl<K> ops::Add<&Vector<K>> for &Vector<K> where K: Copy + Clone +ops::Add<Output=K> {
+impl<K> Add<&Vector<K>> for &Vector<K> where K: Number {
     type Output = Vector<K>;
     fn add(self, _rhs: &Vector<K>) -> Vector<K> {
         if self.size() != _rhs.size() {
@@ -86,7 +84,7 @@ impl<K> ops::Add<&Vector<K>> for &Vector<K> where K: Copy + Clone +ops::Add<Outp
     }
 }
 
-impl<K> ops::Add<Vector<K>> for &Vector<K> where K: Clone + ops::Add<Output=K> {
+impl<K> Add<Vector<K>> for &Vector<K> where K: Number {
     type Output = Vector<K>;
     fn add(self, _rhs: Vector<K>) -> Vector<K> {
         if self.size() != _rhs.size() {
@@ -96,7 +94,7 @@ impl<K> ops::Add<Vector<K>> for &Vector<K> where K: Clone + ops::Add<Output=K> {
     }
 }
 
-impl<K> ops::Add<&Vector<K>> for Vector<K> where K: Clone +ops::Add<Output=K> {
+impl<K> Add<&Vector<K>> for Vector<K> where K: Number {
     type Output = Vector<K>;
     fn add(self, _rhs: &Vector<K>) -> Vector<K> {
         if self.size() != _rhs.size() {
@@ -106,7 +104,7 @@ impl<K> ops::Add<&Vector<K>> for Vector<K> where K: Clone +ops::Add<Output=K> {
     }
 }
 
-impl<K> ops::Add<Vector<K>> for Vector<K> where K:Copy + Clone +ops::Add<Output=K> {
+impl<K> Add<Vector<K>> for Vector<K> where K: Number {
     type Output = Vector<K>;
     fn add(self, _rhs: Vector<K>) -> Vector<K> {
         if self.size() != _rhs.size() {
@@ -117,7 +115,7 @@ impl<K> ops::Add<Vector<K>> for Vector<K> where K:Copy + Clone +ops::Add<Output=
 }
 
 /// SUB
-impl<K> Sub<&Vector<K>> for &Vector<K> where K: Copy + Clone +Sub<Output=K> {
+impl<K> Sub<&Vector<K>> for &Vector<K> where K:  Number {
     type Output = Vector<K>;
     fn sub(self, _rhs: &Vector<K>) -> Vector<K> {
         if self.size() != _rhs.size() {
@@ -127,7 +125,7 @@ impl<K> Sub<&Vector<K>> for &Vector<K> where K: Copy + Clone +Sub<Output=K> {
     }
 }
 
-impl<K> Sub<Vector<K>> for &Vector<K> where K: Clone + Sub<Output=K> {
+impl<K> Sub<Vector<K>> for &Vector<K> where K: Number {
     type Output = Vector<K>;
     fn sub(self, _rhs: Vector<K>) -> Vector<K> {
         if self.size() != _rhs.size() {
@@ -137,7 +135,7 @@ impl<K> Sub<Vector<K>> for &Vector<K> where K: Clone + Sub<Output=K> {
     }
 }
 
-impl<K> Sub<&Vector<K>> for Vector<K> where K: Clone +Sub<Output=K> {
+impl<K> Sub<&Vector<K>> for Vector<K> where K: Number {
     type Output = Vector<K>;
     fn sub(self, _rhs: &Vector<K>) -> Vector<K> {
         if self.size() != _rhs.size() {
@@ -147,7 +145,7 @@ impl<K> Sub<&Vector<K>> for Vector<K> where K: Clone +Sub<Output=K> {
     }
 }
 
-impl<K> Sub<Vector<K>> for Vector<K> where K:Copy + Clone +Sub<Output=K> {
+impl<K> Sub<Vector<K>> for Vector<K> where K: Number {
     type Output = Vector<K>;
     fn sub(self, _rhs: Vector<K>) -> Vector<K> {
         if self.size() != _rhs.size() {
@@ -159,14 +157,14 @@ impl<K> Sub<Vector<K>> for Vector<K> where K:Copy + Clone +Sub<Output=K> {
 
 // SCALE
 
-impl<K> Mul<K> for Vector<K> where K: Copy + Clone + Mul<Output=K> + Into<f64> {
+impl<K> Mul<K> for Vector<K> where K: Number + Copy + Into<f64> {
     type Output = Vector<K>;
     fn mul(self, _rhs: K) -> Vector<K> {
         self.from_vec(self.data.iter().map(|x| K::clone(x) * _rhs).collect())
     }
 }
 
-impl<K> Mul<K> for &Vector<K> where K: Copy + Clone + Mul<Output=K> + Into<f64>{
+impl<K> Mul<K> for &Vector<K> where K: Number + Copy + Into<f64>{
     type Output = Vector<K>;
     fn mul(self, _rhs: K) -> Vector<K> {
         self.from_vec(self.data.iter().map(|x| K::clone(x) * _rhs).collect())
