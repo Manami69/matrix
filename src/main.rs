@@ -1,21 +1,21 @@
-mod vector;
-mod matrix;
-mod complex;
-mod number_type;
-use vector::Vector;
-// use complex::Complexf64;
-use matrix::Matrix;
+// pub mod classes;
+// pub mod matrix;
+// pub mod complex;
+// pub mod number_type;
+// use vector::Vector;
+// use complex::Complexf32;
+// use matrix::Matrix;
+pub mod types;
+pub mod classes;
+
+/// Exercices Includes
+pub mod ex00;
+pub mod ex01;
+pub mod ex02;
 
 fn main() {
-    // let complex_float = [Complexf64::new(10.1, 20.1), Complexf64::new(10.1, 21.1)];
-    // let vec = Vector::from(complex_float);
-    // let vec2 = Vector::from(complex_float);
-    let matrix = Matrix::from([[1.,2., 3.], [4., 5., 3.]]);
-    println!("{}", matrix);
-    let v = Vector::from(Matrix::from([[1.,2., 3.], [4., 5., 6.]]));
-    let v1 = Vector::from([6.,5.,4.,3.,2.,1.]);
-	let m1 = Matrix::from((&v, 3));
-    println!("re {}\n v {}", v, m1 + matrix);
-    // println!{"++ {}\n", (v + &v1) * 3.}
-
+    // ex00::ex00::ex00();
+    // ex01::ex01::ex01();
+    ex02::ex02::ex02();
+    
 }
