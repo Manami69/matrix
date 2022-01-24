@@ -189,14 +189,14 @@ impl<K> Sub<Matrix<K>> for Matrix<K> where K: Number {
 
 // SCALE
 
-impl<K> Mul<K> for Matrix<K> where K: Number + Copy + Into<f64> {
+impl<K> Mul<K> for Matrix<K> where K: Number + Copy {
     type Output = Matrix<K>;
     fn mul(self, _rhs: K) -> Matrix<K> {
         self.from_vec(self.data.iter().map(|x| K::clone(x) * _rhs).collect(), self.shape())
     }
 }
 
-impl<K> Mul<K> for &Matrix<K> where K: Number + Copy + Into<f64>{
+impl<K> Mul<K> for &Matrix<K> where K: Number + Copy {
     type Output = Matrix<K>;
     fn mul(self, _rhs: K) -> Matrix<K> {
         self.from_vec(self.data.iter().map(|x| K::clone(x) * _rhs).collect(), self.shape())
