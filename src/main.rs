@@ -13,10 +13,13 @@ pub mod ex00;
 pub mod ex01;
 pub mod ex02;
 pub mod ex03;
+pub mod ex04;
+
 
 fn main() {
     // ex00::ex00::ex00();
     // ex01::ex01::ex01();
-    ex02::ex02::ex02();
-    ex03::ex03::ex03();
+    // ex02::ex02::ex02();
+    // ex03::ex03::ex03();
+    ex04::ex04::ex04();
 }

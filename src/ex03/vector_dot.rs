@@ -1,7 +1,6 @@
 use crate::classes::vector::Vector;
 use crate::types::number_type::Number;
 use num::{Zero};
-use std::ops::Mul;
 
 /// DOT PRODUCT
 /// fr - produit scalaire 

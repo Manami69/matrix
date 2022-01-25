@@ -1,5 +1,4 @@
 use crate::classes::vector::Vector;
-use crate::types::number_type::Number;
 use super::linearcombination::linear_combination;
 pub fn ex01() {
     let e1 = Vector::from([1., 0., 0.]);

@@ -4,8 +4,8 @@ use std::ops::{Add, Div, Mul, Sub};
 
 #[derive(PartialEq, PartialOrd, Clone, Copy, Debug)]
 pub struct Complexf32 {
-    real: f32,
-    imaginary: f32,
+    pub real: f32,
+    pub imaginary: f32,
 }
 
 impl Complexf32 {
@@ -125,4 +125,3 @@ impl<T> Div<T> for Complexf32 where T: Into<f32> {
         Complexf32::new(self.real / num, self.imaginary / num)
     }
 }
-

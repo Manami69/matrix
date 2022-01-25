@@ -1,5 +1,4 @@
-use crate::types::number_type::Number;
-use std::ops::{Add, Div, Mul, Sub};
+use std::ops::{Add, Mul, Sub};
 
 /// LINEAR INTERPOLATION
 /// fr - interpolation lineaire

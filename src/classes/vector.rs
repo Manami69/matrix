@@ -22,6 +22,14 @@ impl<K> Vector<K> where K: Number {
 	pub fn get_data(&self) -> Vec<K> {
 		self.data.clone()
 	}
+    pub fn is_zero(&self) -> bool where K : Zero, {
+        for d in &self.data {
+            if !d.is_zero() {
+                return false;
+            }
+        }
+        true
+    }
     // pub fn zero(&self, len: usize) -> Self where K: Zero {
     //     Self {data: vec![K::zero(); len]}
     // }
