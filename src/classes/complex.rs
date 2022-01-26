@@ -29,7 +29,7 @@ impl fmt::Display for Complexf32 {
             write!(f, "{}", &self.real)
         }
         else {
-            write!(f, "{}+{}i", &self.real, &self.imaginary)
+            write!(f, "{}{:+}i", &self.real, &self.imaginary)
         }
     }
 }

@@ -12,7 +12,7 @@ use num::{Zero};
 /// If both vectors have different dimensions, the behaviour is undefined.
 
 impl<K> Vector<K> where K : Number + Zero + Copy , {
-    pub fn dot(&self, v: Vector::<K>) -> K {
+    pub fn dot(&self, v: &Vector::<K>) -> K {
         if self.size() != v.size() { panic!("cannot compute 2 Vectors of different dimension.")}
         self.data.iter().zip(v.data.iter()).fold(K::zero(), |mut acc, num| {acc = acc + *num.0 * *num.1; acc})
     }

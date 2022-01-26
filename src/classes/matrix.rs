@@ -1,6 +1,9 @@
 use crate::classes::{vector::Vector, complex::Complexf32};
-use crate::types::number_type::Number;
+use crate::types::{number_type::Number, trait_absolute::Absolute};
+use num::{Zero};
+
 use std::fmt;
+
 use std::ops::{Add, Div, Mul, Sub};
 #[derive(PartialEq, PartialOrd, Eq, Clone, Hash, Debug)]
 pub struct Matrix<K> where K : Number{
@@ -23,6 +26,11 @@ pub struct Matrix<K> where K : Number{
 
 impl<K> Matrix<K> where K : Number {
     #[allow(dead_code)]
+    /// SHAPE
+    /// 
+    /// return [m, n]
+    /// m as rows
+    /// n as column
     pub fn shape(&self) -> [usize; 2] {
         [self.m, self.n]
     }
@@ -35,9 +43,16 @@ impl<K> Matrix<K> where K : Number {
 	pub fn is_square(&self) -> bool {
 		self.m == self.n
 	}
+    pub fn get_val(&self, row: usize, col: usize) -> K where K : Copy{
+        self.data[self.n * row + col]
+    }
 }
 
-
+impl<K> Matrix<K> where K : Number + Zero {
+    pub fn empty_matrix(&self, rows: usize, col:usize) -> Self {
+        Self { data: vec![K::zero(); rows * col], m: rows, n: col}
+    }
+}
 /// CONSTRUCTOR FROM 
 ///
 impl<K, const N: usize, const M: usize> From<[[K; N]; M]> for Matrix<K> where K: Number {
@@ -75,6 +90,12 @@ impl<K> From<&Vector<K>> for Matrix<K> where K: Number {
     }
 }
 
+
+impl<K> From<(Vec<K>, [usize; 2])> for Matrix<K> where K: Number {
+    fn from(d : (Vec<K>, [usize; 2])) -> Self {
+        Self { data : d.0.clone(), m: d.1[0], n: d.1[1]}
+    }
+}
 ///
 /// DISPLAY
 /// 
@@ -200,5 +221,65 @@ impl<K> Mul<K> for &Matrix<K> where K: Number + Copy {
     type Output = Matrix<K>;
     fn mul(self, _rhs: K) -> Matrix<K> {
         self.from_vec(self.data.iter().map(|x| K::clone(x) * _rhs).collect(), self.shape())
+    }
+}
+
+// MUL Matrix
+
+impl<K> Mul<Matrix<K>> for Matrix<K> where K: Number + Copy + Zero {
+    type Output = Matrix<K>;
+    fn mul(self, _rhs: Matrix<K>) -> Matrix<K> {
+        self.mul_mat(&_rhs)
+    }
+}
+
+impl<K> Mul<Matrix<K>> for &Matrix<K> where K: Number + Copy + Zero {
+    type Output = Matrix<K>;
+    fn mul(self, _rhs: Matrix<K>) -> Matrix<K> {
+        self.mul_mat(&_rhs)
+    }
+}
+
+impl<K> Mul<&Matrix<K>> for Matrix<K> where K: Number + Copy + Zero {
+    type Output = Matrix<K>;
+    fn mul(self, _rhs: &Matrix<K>) -> Matrix<K> {
+        self.mul_mat(_rhs)
+    }
+}
+
+impl<K> Mul<&Matrix<K>> for &Matrix<K> where K: Number + Copy + Zero {
+    type Output = Matrix<K>;
+    fn mul(self, _rhs: &Matrix<K>) -> Matrix<K> {
+        self.mul_mat(_rhs)
+    }
+}
+
+// MUL VECTOR
+
+impl<K> Mul<Vector<K>> for Matrix<K> where K: Number + Copy + Zero {
+    type Output = Vector<K>;
+    fn mul(self, _rhs: Vector<K>) -> Vector<K> {
+        self.mul_vec(&_rhs)
+    }
+}
+
+impl<K> Mul<Vector<K>> for &Matrix<K> where K: Number + Copy + Zero {
+    type Output = Vector<K>;
+    fn mul(self, _rhs: Vector<K>) -> Vector<K> {
+        self.mul_vec(&_rhs)
+    }
+}
+
+impl<K> Mul<&Vector<K>> for Matrix<K> where K: Number + Copy + Zero {
+    type Output = Vector<K>;
+    fn mul(self, _rhs: &Vector<K>) -> Vector<K> {
+        self.mul_vec(_rhs)
+    }
+}
+
+impl<K> Mul<&Vector<K>> for &Matrix<K> where K: Number + Copy + Zero {
+    type Output = Vector<K>;
+    fn mul(self, _rhs: &Vector<K>) -> Vector<K> {
+        self.mul_vec(_rhs)
     }
 }

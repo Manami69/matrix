@@ -72,6 +72,12 @@ impl <K> From<usize> for Vector<K> where K: Number + Zero {
         Self { data : vec![K::zero(); d] }
     }
 }
+
+impl <K> From<Vec<K>> for Vector<K> where K: Number + Zero {
+    fn from (d: Vec<K>) -> Self {
+        Self { data : d }
+    }
+}
 /// Display Vector
 impl<K> fmt::Display for Vector<K> where K: Number + fmt::Display {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
