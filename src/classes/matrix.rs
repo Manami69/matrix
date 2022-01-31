@@ -4,7 +4,7 @@ use num::{Zero};
 
 use std::fmt;
 
-use std::ops::{Add, Div, Mul, Sub};
+use std::ops::{Add, Div, Mul, Sub, Neg};
 #[derive(PartialEq, PartialOrd, Eq, Clone, Hash, Debug)]
 pub struct Matrix<K> where K : Number{
     /// Returns a Matrix 
@@ -105,7 +105,7 @@ impl<K> fmt::Display for Matrix<K> where K: Number + fmt::Display {
         to_display.push('[');
         to_display.push('[');
         for (pos, e) in self.data.iter().enumerate() {
-            to_display += &format!("{:.1}", e);
+            to_display += &format!("{}", e);
             if (pos + 1) % self.n == 0 
             {
                 to_display += "]\n[";
@@ -283,3 +283,4 @@ impl<K> Mul<&Vector<K>> for &Matrix<K> where K: Number + Copy + Zero {
         self.mul_vec(_rhs)
     }
 }
+

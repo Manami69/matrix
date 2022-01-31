@@ -81,7 +81,7 @@ impl <K> From<Vec<K>> for Vector<K> where K: Number + Zero {
 /// Display Vector
 impl<K> fmt::Display for Vector<K> where K: Number + fmt::Display {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let mut to_display = self.data.iter().fold(String::new(), |acc, num| acc + &format!("[{:.1}]\n", &num));
+        let mut to_display = self.data.iter().fold(String::new(), |acc, num| acc + &format!("[{}]\n", &num));
         to_display.pop();
         write!(f, "{}", to_display)
     }

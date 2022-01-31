@@ -23,7 +23,7 @@ pub mod ex07;
 pub mod ex08;
 pub mod ex09;
 pub mod ex10;
-
+pub mod ex11;
 
 
 fn main() {
@@ -37,5 +37,6 @@ fn main() {
     // ex07::ex07::ex07();
     // ex08::ex08::ex08();
 	// ex09::ex09::ex09();
-	ex10::ex10::ex10();
+	// ex10::ex10::ex10();
+    ex11::ex11::ex11();
 }
