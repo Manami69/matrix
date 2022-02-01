@@ -26,6 +26,11 @@ use crate::types::number_type::Number;
 ///   | h   i |     | g   i |     | g   h |
 /// 
 /// 4x4
+/// | a b c d |     | (a) - - - |    | - (b) - - |    | - - (c) - |    | - - - (d) |
+/// | e f g h |     |  -  f g h |    | e  -  g h |    | e f  -  h |    | e f g  -  |
+/// | i j k l | => a|  -  j k l | - b| i  -  k l | + c| i j  -  l | - d| i j k  -  |
+/// | m n o p |     |  -  n o p |    | m  -  o p |    | m n  -  p |    | m n o  -  |
+///  ...
 impl<K> Matrix::<K> where K: Number + Copy + num::Zero + std::fmt::Display {
     pub fn determinant(&self) -> K {
 
