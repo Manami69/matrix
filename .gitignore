@@ -13,3 +13,6 @@ Cargo.lock
 # Added by cargo
 
 /target
+
+#ex14 docs
+/matrix_display

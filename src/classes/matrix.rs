@@ -1,10 +1,10 @@
-use crate::classes::{vector::Vector, complex::Complexf32};
-use crate::types::{number_type::Number, trait_absolute::Absolute};
+use crate::classes::{vector::Vector};
+use crate::types::{number_type::Number};
 use num::{Zero};
 
 use std::fmt;
 
-use std::ops::{Add, Div, Mul, Sub, Neg};
+use std::ops::{Add, Mul, Sub};
 #[derive(PartialEq, PartialOrd, Eq, Clone, Hash, Debug)]
 pub struct Matrix<K> where K : Number{
     /// Returns a Matrix 
@@ -45,6 +45,18 @@ impl<K> Matrix<K> where K : Number {
 	}
     pub fn get_val(&self, row: usize, col: usize) -> K where K : Copy{
         self.data[self.n * row + col]
+    }
+    pub fn str_projection(&self) -> String where K : fmt::Display{
+        let mut to_display = String::new();
+        for (pos, e) in self.data.iter().enumerate() {
+            to_display += &format!("{:.1}", e);
+            if (pos + 1) % self.n == 0 
+            {
+                to_display += "\n";
+            }
+            else { to_display += ", "}
+        }
+        to_display
     }
 }
 
@@ -118,6 +130,7 @@ impl<K> fmt::Display for Matrix<K> where K: Number + fmt::Display {
         write!(f, "{}", to_display)
     }
 }
+
 
 
 /// OPERATOR + / - / * OVERLOADING

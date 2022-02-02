@@ -3,7 +3,7 @@ use crate::types::number_type::Number;
 use matrix::Matrix;
 use num::{Zero};
 use std::fmt;
-use std::ops::{Add, Div, Mul, Sub};
+use std::ops::{Add, Mul, Sub};
 /// VECTOR CLASS
 
 #[derive(PartialEq, PartialOrd, Eq, Clone, Hash, Debug)]

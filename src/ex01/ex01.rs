@@ -1,4 +1,5 @@
-use crate::classes::vector::Vector;
+use crate::classes::{vector::Vector, complex::Complexf32};
+use num::Zero;
 use super::linearcombination::linear_combination;
 pub fn ex01() {
     let e1 = Vector::from([1., 0., 0.]);
@@ -15,4 +16,11 @@ pub fn ex01() {
     // [10.]
     // [0.]
     // [230.]
+    let e1 = Vector::from([Complexf32::new(1., 2.), Complexf32::zero(), Complexf32::zero()]);
+    let e2 = Vector::from([Complexf32::zero(), Complexf32::new(1., 2.), Complexf32::zero()]);
+    let e3 = Vector::from([Complexf32::zero(), Complexf32::zero(), Complexf32::new(1., 2.)]);
+    println!("{}", linear_combination(&[e1, e2, e3], &[Complexf32::new(1., 2.), Complexf32::new(3., 4.), Complexf32::new(5., 6.)]));
+    // -3 + 4i     + 0          + 0         =  -3 + 4i
+    // 0           + -5 + 10i   + 0         =  -5 + 10i
+    // 0           + 0          + -7 + 16i  =  -7 + 16i
 }
