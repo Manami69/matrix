@@ -1,4 +1,4 @@
-use crate::classes::vector::Vector;
+use crate::classes::{vector::Vector, complex::Complexf32};
 
 pub fn ex04() {
     let u = Vector::from([0., 0., 0.]);
@@ -10,4 +10,10 @@ pub fn ex04() {
     let u = Vector::from([-1., -2.]);
     println!("{}, {}, {}", u.norm_1(), u.norm(), u.norm_inf());
     // 3.0, 2.236067977, 2.0
+    // COMPLEX test with my  python test
+    let u = Vector::from([Complexf32::new(1., -1.), Complexf32::new(2.,2.)]);
+    let v = Vector::from([Complexf32::new(3., -4.), Complexf32::new(5., 2.)]);
+    println!("{}, {}, {}", u.norm_1(), u.norm(), u.norm_inf());
+    println!("{}, {}, {}", v.norm_1(), v.norm(), v.norm_inf());
+
 }

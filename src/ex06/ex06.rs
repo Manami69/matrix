@@ -1,4 +1,4 @@
-use crate::classes::vector::Vector;
+use crate::classes::{vector::Vector, complex::Complexf32};
 use super::crossproduct::cross_product;
 
 pub fn ex06() {
@@ -20,4 +20,9 @@ pub fn ex06() {
     // [17.]
     // [-58.]
     // [-16.]
+    // Complex https://wims.univ-cotedazur.fr/wims/en_tool~linear~vector.en.html
+    let u = Vector::from([Complexf32::new(1., -6.), Complexf32::new(-2.,2.), Complexf32::new(-7.,5.)]);
+    let v = Vector::from([Complexf32::new(3., -4.), Complexf32::new(5., 2.), Complexf32::new(8.,-8.)]);
+    println!("{}", cross_product(&u, &v));
+    // Vector product: w=v1∧v2= (45+21i,39+99i,15−42i).
 }

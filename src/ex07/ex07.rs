@@ -1,4 +1,4 @@
-use crate::classes::{matrix::Matrix, vector::Vector};
+use crate::classes::{matrix::Matrix, vector::Vector, complex::Complexf32};
 
 pub fn ex07() {
     let u = Matrix::from([
@@ -76,4 +76,20 @@ pub fn ex07() {
         println!("{}", u.mul_mat(&v));
             // [0., -10.]
             // [-3., -1.]
+
+        // Complex https://matrix.reshish.com/multiplication.php
+        let u = Matrix::from([
+            [Complexf32::new(2.,1.), Complexf32::new(3., 2.)],
+            [Complexf32::new(4., -1.), Complexf32::new(2., 1.)],
+            [Complexf32::new(6., -8.), Complexf32::new(5., 7.)]
+            ]);
+        let v = Matrix::from([
+            [Complexf32::new(-2., 4.), Complexf32::new(-4., -4.), Complexf32::new(3., 0.), Complexf32::new(3., 4.), Complexf32::new(1., -8.)],
+            [Complexf32::new(7., 8.), Complexf32::new(2., -3.), Complexf32::new(6., 9.), Complexf32::new(-8., 0.), Complexf32::new(12., -3.)],
+            ]);
+            println!("{}", u.mul_mat(&v));
+            // 
+            // -3+44i	8-17i	 6+42i	 -22-5i	52
+            // 2+41i	-13-16i	 15+21i	 5i	    23-27i
+            // -1+129i	-25+7i	 -15+63i 10-56i	23+13i
 }

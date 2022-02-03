@@ -23,7 +23,8 @@ pub fn ex05() {
     let v = Vector::from([4., 5., 6.]);
     println!("{}", angle_cos(&u, &v));
     // 0.974631846
-    let u = Vector::from([Complexf32::new(1., -1.), Complexf32::new(0.0, 0.)]);
-    let v = Vector::from([Complexf32::new(1., 0.), Complexf32::new(1.0, 0.)]);
+    let u = Vector::from([Complexf32::new(1., -1.), Complexf32::new(2.,2.)]);
+    let v = Vector::from([Complexf32::new(3., -4.), Complexf32::new(5., 2.)]);
     println!("{}", angle_cos(&u, &v) );
+    // Cosine Similarity between A and B:(0.21516574145596756+0.3012320380383546j)
 }

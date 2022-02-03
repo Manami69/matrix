@@ -1,4 +1,4 @@
-use crate::classes::matrix::Matrix;
+use crate::classes::{matrix::Matrix, complex::Complexf32};
 
 pub fn ex08() {
     let u = Matrix::from([
@@ -21,4 +21,10 @@ pub fn ex08() {
         ]);
         println!("{}", u.trace());
         // -21.0
+        let u = Matrix::from([
+            [Complexf32::new(2.,1.), Complexf32::new(3., 2.)],
+            [Complexf32::new(4., -1.), Complexf32::new(2., 1.)]
+        ]);
+        println!("{}", u.trace());
+        // = 2 + 1i + 2 + 1i = 4 + 2i
 }

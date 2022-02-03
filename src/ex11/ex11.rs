@@ -1,4 +1,4 @@
-use crate::classes::matrix::Matrix;
+use crate::classes::{matrix::Matrix, complex::Complexf32};
 
 
 pub fn ex11() {
@@ -30,4 +30,11 @@ pub fn ex11() {
         ]);
         println!("{}", u.determinant());
         // 1032
+        let u = Matrix::from([
+            [Complexf32::new(2.,1.), Complexf32::new(3., 2.)],
+            [Complexf32::new(4., -1.), Complexf32::new(2., 1.)]
+        ]);
+        println!("{}", u.determinant());
+
+        //  -11-i https://matrix.reshish.com/determinant.php
 }

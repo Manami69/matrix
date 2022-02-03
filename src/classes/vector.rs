@@ -1,4 +1,4 @@
-use crate::classes::matrix;
+use crate::classes::{matrix, complex::Complexf32};
 use crate::types::number_type::Number;
 use matrix::Matrix;
 use num::{Zero};
@@ -192,6 +192,25 @@ impl<K> Mul<K> for &Vector<K> where K: Number + Copy {
     }
 }
 
+impl Mul<f32> for Vector<Complexf32> {
+    type Output = Vector<Complexf32>;
+    fn mul(self, _rhs: f32) -> Vector<Complexf32> {
+        self.from_vec(self.data.iter().map(|x| x.clone() * _rhs).collect())
+    }
+}
+impl Mul<f32> for &Vector<Complexf32> {
+    type Output = Vector<Complexf32>;
+    fn mul(self, _rhs: f32) -> Vector<Complexf32> {
+        self.from_vec(self.data.iter().map(|x| x.clone() * _rhs).collect())
+    }
+}
+
+// impl<K> Mul<f32> for &Vector<K> where K: Number + Copy {
+//     type Output = Vector<K>;
+//     fn mul(self, _rhs: K) -> Vector<K> {
+//         self.from_vec(self.data.iter().map(|x| K::clone(x) * _rhs).collect())
+//     }
+// } 
 impl<K> Mul<&K> for Vector<K> where K: Number + Copy  {
     type Output = Vector<K>;
     fn mul(self, _rhs: &K) -> Vector<K> {
