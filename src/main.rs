@@ -37,32 +37,34 @@ use ex14::test::ex14;
 use ex15::test::ex15;
 
 fn main() {
-	let args: Vec<String> = args().collect();
-	if args.len() != 2 
-	{
-		println!("You must put the exercice number as an arg (from 0 to 15) to run the tests");
-		return;
-	}
-	let exercice : i32 = args[1].trim().parse().expect("you must give a number between 0 and 15"); 
-	match exercice {
-		0 => ex00(),
-		1 => ex01(),
-		2 => ex02(),
-		3 => ex03(),
-		4 => ex04(), 
-		5 => ex05(),
-		6 => ex06(),
-		7 => ex07(),
-		8 => ex08(),
-		9 => ex09(),
-		10 => ex10(),
-		11 => ex11(),
-		12 => ex12(),
-		13 => ex13(),
-		14 => ex14().unwrap(),
-		15 => ex15(),
-		_ => {
-			println!("you must give a number between 0 and 15");
-		}
-	}
+    let args: Vec<String> = args().collect();
+    if args.len() != 2 {
+        println!("You must put the exercice number as an arg (from 0 to 15) to run the tests");
+        return;
+    }
+    let exercice: i32 = args[1]
+        .trim()
+        .parse()
+        .expect("you must give a number between 0 and 15");
+    match exercice {
+        0 => ex00(),
+        1 => ex01(),
+        2 => ex02(),
+        3 => ex03(),
+        4 => ex04(),
+        5 => ex05(),
+        6 => ex06(),
+        7 => ex07(),
+        8 => ex08(),
+        9 => ex09(),
+        10 => ex10(),
+        11 => ex11(),
+        12 => ex12(),
+        13 => ex13(),
+        14 => ex14().unwrap(),
+        15 => ex15(),
+        _ => {
+            println!("you must give a number between 0 and 15");
+        }
+    }
 }

@@ -1,2 +1,2 @@
-pub mod test;
 pub mod cosine;
+pub mod test;
