@@ -15,7 +15,7 @@ use crate::types::number_type::Number;
 /// [u.1 * v.2 - v.1 * u.2 , u.2 * v.0 - v.2 * u.0, u.0 * v.1 - v.0 * u.1]
 /// 3Blue1brown https://www.youtube.com/watch?v=eu6i7WJeinw&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&index=10
 
-pub fn cross_product<K>(u: &Vector::<K>, v: &Vector::<K>) -> Vector::<K> where K: Number + Copy{
+pub fn cross_product<K>(u: &Vector::<K>, v: &Vector::<K>) -> Vector::<K> where K: Number {
     if u.size() != 3 || v.size() != 3 { panic!("cross product can only be done with 3 dimension vectors"); }
     let a: K = u.data[1] * v.data[2] - v.data[1] * u.data[2];
     let b: K = u.data[2] * v.data[0] - v.data[2] * u.data[0];

@@ -1,11 +1,11 @@
 use crate::classes::matrix::Matrix;
 use crate::types::number_type::Number;
-use num::Zero;
+
 /// TRANSPOSE
 /// 
 /// the transpose of a matrix is an operator which flips a matrix over its diagonal.
 /// https://en.wikipedia.org/wiki/Transpose
-impl<K> Matrix::<K> where K : Number + Zero + Copy {
+impl<K> Matrix::<K> where K : Number {
     pub fn transpose(&self) -> Matrix::<K>
     {
 		let nm : [usize; 2] = self.shape();

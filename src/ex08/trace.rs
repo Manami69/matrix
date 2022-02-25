@@ -1,6 +1,6 @@
 use crate::classes::matrix::Matrix;
 use crate::types::number_type::Number;
-use num::Zero;
+
 /// TRACE
 /// 
 /// the trace of a square matrix A, denoted tr(A),
@@ -8,7 +8,7 @@ use num::Zero;
 /// (from the upper left to the lower right) of A.
 /// The trace is only defined for a square matrix (n × n).
 
-impl<K> Matrix::<K> where K : Number + Zero + Copy {
+impl<K> Matrix::<K> where K : Number {
     pub fn trace(&self) -> K {
         if !self.is_square() {panic!("The trace is only defined for a square matrix (n × n).");}
         let mn = self.shape();

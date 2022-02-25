@@ -67,19 +67,19 @@ impl <K> From<&Vector<K>> for Vector<K> where K: Number {
 }
 
 
-impl <K> From<usize> for Vector<K> where K: Number + Zero {
+impl <K> From<usize> for Vector<K> where K: Number  {
     fn from (d: usize) -> Self {
         Self { data : vec![K::zero(); d] }
     }
 }
 
-impl <K> From<Vec<K>> for Vector<K> where K: Number + Zero {
+impl <K> From<Vec<K>> for Vector<K> where K: Number  {
     fn from (d: Vec<K>) -> Self {
         Self { data : d }
     }
 }
 /// Display Vector
-impl<K> fmt::Display for Vector<K> where K: Number + fmt::Display {
+impl<K> fmt::Display for Vector<K> where K: Number {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let mut to_display = self.data.iter().fold(String::new(), |acc, num| acc + &format!("[{}]\n", &num));
         to_display.pop();
@@ -178,14 +178,14 @@ impl<K> Sub<Vector<K>> for Vector<K> where K: Number {
 
 // SCALE
 
-impl<K> Mul<K> for Vector<K> where K: Number + Copy  {
+impl<K> Mul<K> for Vector<K> where K: Number  {
     type Output = Vector<K>;
     fn mul(self, _rhs: K) -> Vector<K> {
         self.from_vec(self.data.iter().map(|x| K::clone(x) * _rhs).collect())
     }
 }
 
-impl<K> Mul<K> for &Vector<K> where K: Number + Copy {
+impl<K> Mul<K> for &Vector<K> where K: Number {
     type Output = Vector<K>;
     fn mul(self, _rhs: K) -> Vector<K> {
         self.from_vec(self.data.iter().map(|x| K::clone(x) * _rhs).collect())
@@ -205,20 +205,14 @@ impl Mul<f32> for &Vector<Complexf32> {
     }
 }
 
-// impl<K> Mul<f32> for &Vector<K> where K: Number + Copy {
-//     type Output = Vector<K>;
-//     fn mul(self, _rhs: K) -> Vector<K> {
-//         self.from_vec(self.data.iter().map(|x| K::clone(x) * _rhs).collect())
-//     }
-// } 
-impl<K> Mul<&K> for Vector<K> where K: Number + Copy  {
+impl<K> Mul<&K> for Vector<K> where K: Number  {
     type Output = Vector<K>;
     fn mul(self, _rhs: &K) -> Vector<K> {
         self.from_vec(self.data.iter().map(|x| K::clone(x) * K::clone(_rhs)).collect())
     }
 }
 
-impl<K> Mul<&K> for &Vector<K> where K: Number + Copy {
+impl<K> Mul<&K> for &Vector<K> where K: Number {
     type Output = Vector<K>;
     fn mul(self, _rhs: &K) -> Vector<K> {
         self.from_vec(self.data.iter().map(|x| K::clone(x) * K::clone(_rhs)).collect())

@@ -14,7 +14,7 @@ use crate::types::number_type::Number;
 /// to calculate the row it's easier to use the row reduced form rref(A) and
 /// count the number of pivot since every other vector can be found as
 /// a linear combination of the vectors before
-impl<K> Matrix::<K>  where K: Number + num::Zero + Copy {
+impl<K> Matrix::<K>  where K: Number {
     pub fn rank(&self) -> usize {
         let rref = self.row_echelon();
         let nm = rref.shape();

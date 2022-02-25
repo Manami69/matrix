@@ -31,7 +31,7 @@ use crate::types::number_type::Number;
 /// | i j k l | => a|  -  j k l | - b| i  -  k l | + c| i j  -  l | - d| i j k  -  |
 /// | m n o p |     |  -  n o p |    | m  -  o p |    | m n  -  p |    | m n o  -  |
 ///  ...
-impl<K> Matrix::<K> where K: Number + Copy + num::Zero + std::fmt::Display {
+impl<K> Matrix::<K> where K: Number {
     pub fn determinant(&self) -> K {
 
         if !self.is_square() { panic!("can't calculate determinant of a non square Matrix");}

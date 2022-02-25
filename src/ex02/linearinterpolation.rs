@@ -21,7 +21,7 @@ use std::ops::{Add, Mul, Sub};
 /// so I choose to follow one of the comments here :
 /// https://stackoverflow.com/questions/4353525/floating-point-linear-interpolation
 
-pub fn lerp<V>(u: V, v: V, t: f32) -> V where V: Add<V, Output=V> + Sub<V, Output=V> + Mul<f32, Output=V> + Clone, {
+pub fn lerp<V>(u: V, v: V, t: f32) -> V where V: Clone +  Add<V, Output = V> + Mul<f32, Output= V> + Sub<V, Output= V> , {
 
     if t <= 0.5 { u.clone() + (v - u) * t }
     else {v.clone() - (v - u) * (1.0 - t) }

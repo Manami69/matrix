@@ -1,7 +1,6 @@
 use crate::classes::vector::Vector;
 // use crate::ex00::vector;
 use crate::types::number_type::Number;
-use num::{Zero};
 
 /// LINEAR COMBINATION
 /// fr => combinaison linéaire
@@ -23,6 +22,6 @@ use num::{Zero};
 /// ** 3Blue1Brown course on linear combination : 
 /// https://www.youtube.com/watch?v=k7RM-ot2NWY 
 
-pub fn linear_combination<K, const N: usize>(u: &[Vector<K>;N], coefs: &[K; N]) -> Vector<K> where K: Number + std::fmt::Display + Zero + Copy,  {
+pub fn linear_combination<K, const N: usize>(u: &[Vector<K>;N], coefs: &[K; N]) -> Vector<K> where K: Number ,  {
     u.iter().zip(coefs.iter()).fold(Vector::<K>::from(u[0].size()), |mut sum, plus| {sum = sum + plus.0 * plus.1; sum})
 }

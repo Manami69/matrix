@@ -1,11 +1,10 @@
 use crate::classes::{matrix::Matrix, vector::Vector};
 use crate::types::number_type::Number;
-use num::{Zero};
 
 
 /// Matrix mul image representation :
 /// https://en.wikipedia.org/wiki/Matrix_multiplication#/media/File:Matrix_multiplication_diagram_2.svg
-impl<K> Matrix::<K> where K: Number + Zero + Clone + Copy  {
+impl<K> Matrix::<K> where K: Number  {
     pub fn mul_vec(&self, vec: &Vector::<K>) -> Vector::<K> {
         let mn = self.shape();
         let size = vec.size();

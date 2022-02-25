@@ -21,7 +21,7 @@ use std::cmp::Ordering;
 /// 
 /// https://en.wikipedia.org/wiki/Norm_(mathematics) 
 
-impl<V> Vector<V> where V : Number + Absolute + Copy,  {
+impl<V> Vector<V> where V : Number + Absolute,  {
     /// Taxicab Norm
     pub fn norm_1(&self) -> f32 {
         self.data.iter().fold(f32::zero(), |mut acc, num| {acc = acc + num.abs(); acc})

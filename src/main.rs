@@ -1,5 +1,6 @@
 pub mod classes;
 pub mod types;
+use std::env::args;
 
 /// Exercices Includes
 pub mod ex00;
@@ -18,22 +19,50 @@ pub mod ex12;
 pub mod ex13;
 pub mod ex14;
 pub mod ex15;
+use ex00::ex00::ex00;
+use ex01::ex01::ex01;
+use ex02::ex02::ex02;
+use ex03::ex03::ex03;
+use ex04::ex04::ex04;
+use ex05::ex05::ex05;
+use ex06::ex06::ex06;
+use ex07::ex07::ex07;
+use ex08::ex08::ex08;
+use ex09::ex09::ex09;
+use ex10::ex10::ex10;
+use ex11::ex11::ex11;
+use ex12::ex12::ex12;
+use ex13::ex13::ex13;
+use ex14::ex14::ex14;
+use ex15::ex15::ex15;
 
 fn main() {
-    // ex00::ex00::ex00();
-    // ex01::ex01::ex01();
-    // ex02::ex02::ex02();
-    // ex03::ex03::ex03();
-    // ex04::ex04::ex04();
-    // ex05::ex05::ex05();
-    // ex06::ex06::ex06();
-    // ex07::ex07::ex07();
-    // ex08::ex08::ex08();
-    // ex09::ex09::ex09();
-    // ex10::ex10::ex10();
-    ex11::ex11::ex11();
-    // ex12::ex12::ex12();
-    // ex13::ex13::ex13();
-    // ex14::ex14::ex14();
-    // ex15::ex15::ex15();
+	let args: Vec<String> = args().collect();
+	if args.len() != 2 
+	{
+		println!("You must put the exercice number as an arg (from 0 to 15) to run the tests");
+		return;
+	}
+	let exercice : i32 = args[1].trim().parse().expect("you must give a number between 0 and 15"); 
+	match exercice {
+		0 => ex00(),
+		1 => ex01(),
+		2 => ex02(),
+		3 => ex03(),
+		4 => ex04(), 
+		5 => ex05(),
+		6 => ex06(),
+		7 => ex07(),
+		8 => ex08(),
+		9 => ex09(),
+		10 => ex10(),
+		11 => ex11(),
+		12 => ex12(),
+		13 => ex13(),
+		14 => ex14().unwrap(),
+		15 => ex15(),
+		_ => {
+			println!("you must give a number between 0 and 15");
+		}
+	}
 }

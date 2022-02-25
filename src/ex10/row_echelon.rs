@@ -10,7 +10,7 @@ use crate::types::number_type::Number;
 /// https://youtu.be/dlvNcr33M_Y
 /// why https://www.youtube.com/watch?v=0MF5iJ9NY0Q
 /// 
-impl<K> Matrix::<K> where K: Number + num::Zero  + Copy {
+impl<K> Matrix::<K> where K: Number {
 
  	pub fn row_echelon(&self) -> Matrix<K> {
         let mut new = Vec::from(self.data.clone());

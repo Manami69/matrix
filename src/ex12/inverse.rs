@@ -13,18 +13,19 @@ use crate::types::number_type::Number;
 /// 
 /// If the Matrix determinant is zero, the matrix is singular and an error is returned;
 /// https://www.mathsisfun.com/algebra/matrix-inverse.html
-impl<K> Matrix::<K> where K : Number + From<f32> + Copy + num::Zero + fmt::Display{
-    /// IDENTITY
-    /// 
-    /// return identity matrix Vec dataset of size n*n
+impl<K> Matrix::<K> where K : Number + From<f32> {
+	/// IDENTITY
+	/// 
+	/// return identity matrix Vec dataset of size n*n
     fn identity(&self, n: usize) -> Vec<K> {
-        let mut id = vec![K::zero(); n*n];
+		let mut id = vec![K::zero(); n*n];
         for i in 0 .. n
         {
-            id[i * n + i] = (1.).into();
+			id[i * n + i] = (1.).into();
         }
         id
     }
+
     pub fn inverse(&self) -> Result<Matrix::<K>, SingularMatrix> {
         if !self.is_square() { panic!("Cannot compute non square matrix inverse")}
         let nm = self.shape();
@@ -73,5 +74,3 @@ impl fmt::Display for SingularMatrix {
         write!(f, "cannot find inverse of a singular matrix.")
     }
 }
-
-// PS : HAPPY MOI CA A MARCHE DU PREMIER COUP !!!!
