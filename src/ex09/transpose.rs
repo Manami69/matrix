@@ -10,7 +10,6 @@ impl<K> Matrix::<K> where K : Number {
     {
 		let nm : [usize; 2] = self.shape();
 		let mut data = vec![K::zero(); nm[0] * nm[1]];
-		//let mut new = Matrix::from((data, [nm[1], mn[0]]));
 
 		for rowtocol in 0 .. nm[0] {
 			for coltorow in 0 .. nm[1] {
@@ -18,6 +17,5 @@ impl<K> Matrix::<K> where K : Number {
 			}
 		}
 		Matrix::from((data, [nm[1], nm[0]]))
-		//todo!();
     }
 }
