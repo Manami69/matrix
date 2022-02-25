@@ -1,3 +1,3 @@
-pub mod ex00;
+pub mod test;
 pub(super) mod vector;
 pub(super) mod matrix;

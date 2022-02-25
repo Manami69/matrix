@@ -1,2 +1,2 @@
-pub mod ex12;
+pub mod test;
 pub(super) mod inverse;

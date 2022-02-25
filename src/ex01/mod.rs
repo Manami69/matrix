@@ -1,2 +1,2 @@
-pub mod ex01;
+pub mod test;
 pub mod linearcombination;

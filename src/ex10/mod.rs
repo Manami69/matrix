@@ -1,2 +1,2 @@
-pub mod ex10;
+pub mod test;
 pub(super) mod row_echelon;

@@ -1,2 +1,2 @@
-pub mod ex06;
+pub mod test;
 pub mod crossproduct;

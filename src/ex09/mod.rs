@@ -1,2 +1,2 @@
-pub mod ex09;
+pub mod test;
 pub(super) mod transpose;

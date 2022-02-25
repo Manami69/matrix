@@ -1,2 +1,2 @@
 pub mod linearinterpolation;
-pub mod ex02;
+pub mod test;

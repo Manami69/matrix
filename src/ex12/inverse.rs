@@ -30,7 +30,7 @@ impl<K> Matrix::<K> where K : Number + From<f32> {
         if !self.is_square() { panic!("Cannot compute non square matrix inverse")}
         let nm = self.shape();
         if self.determinant().is_zero() { return  Err(SingularMatrix)}
-        let mut last = Vec::from(self.data.clone());
+        let mut last = self.data.clone();
         let mut next = self.identity(nm[0]);
         let mut pivot: K;
         for i in 0 .. nm[0] {

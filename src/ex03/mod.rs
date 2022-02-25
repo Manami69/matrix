@@ -1,2 +1,2 @@
-pub mod ex03;
+pub mod test;
 pub(super) mod vector_dot;

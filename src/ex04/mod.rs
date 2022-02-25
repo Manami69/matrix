@@ -1,2 +1,2 @@
-pub mod ex04;
+pub mod test;
 pub(super) mod vector_norm;

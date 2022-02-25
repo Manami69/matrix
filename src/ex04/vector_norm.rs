@@ -24,13 +24,13 @@ use std::cmp::Ordering;
 impl<V> Vector<V> where V : Number + Absolute,  {
     /// Taxicab Norm
     pub fn norm_1(&self) -> f32 {
-        self.data.iter().fold(f32::zero(), |mut acc, num| {acc = acc + num.abs(); acc})
+        self.data.iter().fold(f32::zero(), |mut acc, num| {acc += num.abs(); acc})
     }
     /// Euclidian Norm
     /// 
     /// I used absolute value of each coordinate in order to be able to use complex numbers (Cf : https://mathcs.clarku.edu/~ma130/inner2.pdf)
     pub fn norm(&self) -> f32 {
-        self.data.iter().fold(f32::zero(), |mut acc, num| {acc = acc + num.abs() * num.abs(); acc}).sqrt()
+        self.data.iter().fold(f32::zero(), |mut acc, num| {acc += num.abs() * num.abs(); acc}).sqrt()
     }
     /// Supremum Norm
     pub fn norm_inf(&self) -> f32 {

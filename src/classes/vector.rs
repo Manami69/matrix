@@ -195,13 +195,13 @@ impl<K> Mul<K> for &Vector<K> where K: Number {
 impl Mul<f32> for Vector<Complexf32> {
     type Output = Vector<Complexf32>;
     fn mul(self, _rhs: f32) -> Vector<Complexf32> {
-        self.from_vec(self.data.iter().map(|x| x.clone() * _rhs).collect())
+        self.from_vec(self.data.iter().map(|x| *x * _rhs).collect())
     }
 }
 impl Mul<f32> for &Vector<Complexf32> {
     type Output = Vector<Complexf32>;
     fn mul(self, _rhs: f32) -> Vector<Complexf32> {
-        self.from_vec(self.data.iter().map(|x| x.clone() * _rhs).collect())
+        self.from_vec(self.data.iter().map(|x| *x * _rhs).collect())
     }
 }
 

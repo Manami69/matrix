@@ -13,7 +13,7 @@ use crate::types::number_type::Number;
 impl<K> Matrix::<K> where K: Number {
 
  	pub fn row_echelon(&self) -> Matrix<K> {
-        let mut new = Vec::from(self.data.clone());
+        let mut new = self.data.clone();
         let nm = self.shape();
         //let mut cur_pivot_place = 0;
         let mut row = 0;

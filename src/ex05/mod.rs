@@ -1,2 +1,2 @@
-pub mod ex05;
+pub mod test;
 pub mod cosine;

@@ -1,6 +1,8 @@
 # matrix
 An introduction to Linear Algebra
 
+run with `cargo run [exercice number]`
+
 ## Contents
 Summary: Vectors and matrices, basically
 

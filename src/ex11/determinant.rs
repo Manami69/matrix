@@ -39,7 +39,7 @@ impl<K> Matrix::<K> where K: Number {
         
         if nm[0] > 4 { panic!("determinant of n*n matrixes is only supported for n <= 4");}
         // 1x1 Matrix
-        if nm[0] == 1 { return self.data[0]}
+        if nm[0] == 1 { self.data[0]}
         else if nm[0] == 2 {
             // 2x2 Matrix det(A) is the aera of the parallelogram formed by the image of the basis vectors
             self.data[0] * self.data[3] - self.data[1] * self.data[2]
