@@ -1,9 +1,8 @@
-use crate::classes::{vector::Vector, complex::Complexf32};
-use crate::types::{number_type::Number};
+use crate::mathlib::classes::{vector::Vector};
+use crate::mathlib::types::{number_type::Number};
 
 use std::fmt;
 
-use std::ops::{Add, Mul, Sub};
 /// Returns a Matrix 
 /// 
 /// # Arguments
@@ -35,7 +34,7 @@ impl<K> Matrix<K> where K : Number {
     pub fn get_data(&self) -> Vec<K> {
         self.data.clone()
     }
-	fn from_vec(&self, vec:Vec<K>, shape:[usize; 2]) -> Self {
+	pub fn from_vec(&self, vec:Vec<K>, shape:[usize; 2]) -> Self {
 		Self {data: vec, m: shape[0], n: shape[1]}
 	}
 	pub fn is_square(&self) -> bool {

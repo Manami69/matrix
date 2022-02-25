@@ -1,4 +1,4 @@
-use crate::classes::complex::Complexf32;
+use crate::mathlib::classes::complex::Complexf32;
 
 /// Absolute value of f32 or complex f32
 pub trait Absolute {

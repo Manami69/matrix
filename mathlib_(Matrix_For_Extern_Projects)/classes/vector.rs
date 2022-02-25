@@ -1,9 +1,8 @@
-use crate::classes::{matrix, complex::Complexf32};
-use crate::types::number_type::Number;
+use crate::mathlib::classes::{matrix};
+use crate::mathlib::types::number_type::Number;
 use matrix::Matrix;
 use num::{Zero};
 use std::fmt;
-use std::ops::{Add, Mul, Sub};
 /// VECTOR CLASS
 
 #[derive(PartialEq, PartialOrd, Eq, Clone, Hash, Debug)]
@@ -16,12 +15,13 @@ impl<K> Vector<K> where K: Number {
     pub fn size(&self) -> usize {
         self.data.len()
     }
-    fn from_vec(&self, vec:Vec<K>) -> Self {
+    pub fn from_vec(&self, vec:Vec<K>) -> Self {
         Self {data: vec}
     }
 	pub fn get_data(&self) -> Vec<K> {
 		self.data.clone()
 	}
+
     pub fn is_zero(&self) -> bool where K : Zero, {
         for d in &self.data {
             if !d.is_zero() {

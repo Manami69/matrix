@@ -1,5 +1,5 @@
+use crate::mathlib::classes::{complex::Complexf32};
 use num::{ Zero};
-use std::fmt;
 use std::ops::{Add, Div, Mul, Sub};
 
 impl Add<Complexf32> for Complexf32 {

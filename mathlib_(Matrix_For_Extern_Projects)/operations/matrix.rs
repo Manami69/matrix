@@ -1,5 +1,5 @@
-use crate::classes::{vector::Vector, complex::Complexf32};
-use crate::types::{number_type::Number};
+use crate::mathlib::classes::{matrix::Matrix, vector::Vector, complex::Complexf32};
+use crate::mathlib::types::{number_type::Number};
 
 use std::fmt;
 
@@ -183,7 +183,44 @@ impl<K> Mul<&Vector<K>> for &Matrix<K> where K: Number {
     }
 }
 
-impl<K> for Matrix::<K> where K : Number {
+impl<K> Matrix::<K> where K : Number {
+    pub fn mul_vec(&self, vec: &Vector::<K>) -> Vector::<K> {
+        let mn = self.shape();
+        let size = vec.size();
+        if mn[1] != size { panic!("For matrix and vector multiplication, the number of col in the matrix must be equal to the vector dimension.")}
+        let mut new = Vec::<K>::new();
+        for row in 0 .. mn[0] {
+            let mut num = K::zero();
+
+            for col in 0 .. mn[1] {
+                num = num + self.get_val(row, col) * vec.data[col];
+            }
+            new.push(num);
+        }    
+        Vector::from(new)
+    }
+    /// Matrix mul
+    /// 
+    /// If A is an m × n matrix and B is an n × p matrix,
+    /// the matrix product C = AB (denoted without multiplication signs or dots)
+    /// is defined to be the m × p matrix
+    /// https://en.wikipedia.org/wiki/Matrix_multiplication#Definition
+    pub fn mul_mat(&self, mat: &Matrix::<K>) -> Matrix::<K> {
+        let mn = self.shape();
+        let np = mat.shape();
+        if mn[1] != np[0] { panic!("For matrix multiplication, the number of columns in the first matrix must be equal to the number of rows in the second matrix.")}
+        let mut new = Vec::<K>::new();
+        for i in 0 .. mn[0]* np[1] {
+            let row = i / np[1];
+            let col = i % np[1];
+            let mut num = K::zero();
+            for j in 0 .. mn[1] {
+                num = num + self.get_val(row, j) * mat.get_val(j, col);
+            }
+            new.push(num);
+        }
+        Matrix::from((new, [mn[0], np[1]]))
+    }
 
 	/// TRACE
 	/// 
@@ -300,7 +337,7 @@ impl<K> for Matrix::<K> where K : Number {
 	/// IDENTITY
 	/// 
 	/// return identity matrix Vec dataset of size n*n
-    fn identity(&self, n: usize) -> Vec<K> {
+    fn identity(&self, n: usize) -> Vec<K> where K : From<f32> {
 		let mut id = vec![K::zero(); n*n];
         for i in 0 .. n
         {
@@ -314,7 +351,7 @@ impl<K> for Matrix::<K> where K : Number {
 	/// for a matrix A, the inverse of that matrix is A-1.
 	/// 
 	/// If the Matrix determinant is zero, the matrix is singular and an error is returned;
-	pub fn inverse(&self) -> Result<Matrix::<K>, SingularMatrix> {
+	pub fn inverse(&self) -> Result<Matrix::<K>, SingularMatrix> where K : From<f32> {
         if !self.is_square() { panic!("Cannot compute non square matrix inverse")}
         let nm = self.shape();
         if self.determinant().is_zero() { return  Err(SingularMatrix)}
@@ -387,8 +424,11 @@ impl Matrix<f32> {
 	/// BASE
 	/// 
 	/// create an identity matrix of shape 4*4
-	pub fn base() -> Matrix<f32> {
-		Matrix::f32::from(self.identity(4))
+	pub fn base(&self) -> Matrix<f32> {
+		Matrix::from([[1., 0., 0., 0.],
+					  [0., 1., 0., 0.],
+					  [0., 0., 1., 0.],
+					  [0., 0., 0., 1.]])
 	}
 
 	/// PROJECTION MATRIX
@@ -402,7 +442,7 @@ impl Matrix<f32> {
 	}
 
 	/// Return a scaling matrix
-	pub fn scaling(scl: f32) -> Matrix<f32> {
+	pub fn scaling( scl: f32) -> Matrix<f32> {
 		Matrix::from([[scl, 0.,  0.,  0.],
 					  [0.,  scl, 0.,  0.],
 					  [0.,  0.,  scl, 0.],
@@ -410,7 +450,7 @@ impl Matrix<f32> {
 	}
 
 	/// Return a translate matrix
-	pub fn translation(tx: f32, ty: f32, tz: f32) -> Matrix<f32> {
+	pub fn translation( tx: f32, ty: f32, tz: f32) -> Matrix<f32> {
 		Matrix::from([[1., 0., 0., tx],
 					  [0., 1., 0., ty],
 					  [0., 0., 1., tz],
@@ -420,8 +460,9 @@ impl Matrix<f32> {
 	/// Return a rotated matrix of angle in radian on the Axis (x, y , z , 1)
 	/// 
 	/// https://learnopengl.com/Getting-started/Transformations
-	pub fn rotation(angle: f32, axis: Vector<f32>) -> Matrix<f32> {
-		let (rx, ry, rz) = (axis[0], axis[1], axis[2]);
+	pub fn rotation( angle: f32, axis: Vector<f32>) -> Matrix<f32> {
+		if axis.size() != 3 { panic!("ROTATION MATRIX ON {} SIZED VECTOR", axis.size()); }
+		let (rx, ry, rz)  = (axis.data[0], axis.data[1], axis.data[2]);
 		let cos = angle.cos();
 		let sin = angle.sin();
 		let cos1 = 1. - cos;

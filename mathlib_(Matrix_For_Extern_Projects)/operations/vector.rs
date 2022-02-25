@@ -1,8 +1,5 @@
-use crate::classes::{matrix, complex::Complexf32};
-use crate::types::number_type::Number;
-use matrix::Matrix;
-use num::{Zero};
-use std::fmt;
+use crate::mathlib::classes::{ vector::Vector, complex::Complexf32};
+use crate::mathlib::types::number_type::Number;
 use std::ops::{Add, Mul, Sub};
 
 /// OPERATOR + / - / * OVERLOADING

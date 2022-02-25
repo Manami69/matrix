@@ -1,6 +1,5 @@
 use num::{ Zero};
 use std::fmt;
-use std::ops::{Add, Div, Mul, Sub};
 
 #[derive(PartialEq, PartialOrd, Clone, Copy, Debug)]
 pub struct Complexf32 {
